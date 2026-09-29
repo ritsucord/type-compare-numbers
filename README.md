@@ -26,13 +26,12 @@ type NumToStr<T extends number> = `${T}`
 type AscendingNumStrPadded<T extends string, U extends string> =
     T extends `${infer TD extends Digit}${infer TR}`? (
         U extends `${infer UD extends Digit}${infer UR}`? (
-            Ascending<TD, UD> extends true? true:
-            Ascending<UD, TD> extends true? false:
+            Ascending<TD, UD> extends false? false:
+            Ascending<UD, TD> extends false? true:
             AscendingNumStrPadded<TR, UR>
         ):
         U extends ''? false: never
-    ):
-    never
+    ): true
 
 type StrToArr<T extends string> =
     T extends `${infer F}${infer R}`? [F, ...StrToArr<R>]: []
